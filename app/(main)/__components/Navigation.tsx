@@ -1,12 +1,20 @@
 "use client"
 
 import { cn } from "@/lib/utils";
-import { ChevronLeft, MenuIcon } from "lucide-react";
+import { ChevronsLeft, MenuIcon, PlusIcon } from "lucide-react";
 import { ElementRef, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
+import { UserItem } from "./user_item";
+import { Item } from "./item";
+import { useMutation } from "convex/react";import { api } from "@/convex/_generated/api";
+import { toast } from "sonner";
+
+
+
 
 export  const Navigation = () => {
     
+    const create = useMutation(api.documents.create)
     const isMobile = useMediaQuery("(max-width: 768px)");
     const isResizeingRef =useRef(false)
     const sidebarRef =useRef<ElementRef<"aside">>(null);
@@ -79,6 +87,16 @@ export  const Navigation = () => {
         }
     }
 
+    const handleCreate = () => {
+        const promise =create({ title: "untitled"});
+
+        toast.promise(promise, {
+            loading: "Craeting a new Document..",
+            success: "New Document Created ",
+            error: "Failed to create a document"
+        })
+    }
+
     return ( 
         <>
            <aside
@@ -91,15 +109,20 @@ export  const Navigation = () => {
                <div
                 onClick={collapse}
                 role="button"
-                className={cn("h-66 w-6 text-muted-foreground rounded-sm hover:bg-neutral-300 dark:hover: bg-neutral-600 absolute top-3 right-2 opacity-0 group-hover/sidebar:opacity-100 transition-all",
+                className={cn("h-6 w-6 text-muted-foreground rounded-sm hover:bg-neutral-300 dark:hover: bg-neutral-600 absolute top-3 right-2 opacity-0 group-hover/sidebar:opacity-100 transition-all",
                     isMobile && 'opacity-100'
                 )}
                 >
-                    <ChevronLeft />
+                    <ChevronsLeft className="h-6 w-6" />
                </div>
 
                <div>
-                 <p>Action Items</p>
+                 <UserItem />
+                 <Item
+                  onClick={handleCreate} 
+                  label="New Page"
+                  icon={PlusIcon} 
+                  />     
                </div>
 
                <div className="mt-4">
@@ -119,7 +142,7 @@ export  const Navigation = () => {
 
            <div
              ref={navbarRef}
-             className={cn("absolutet top-0 z-[99999] w-[calc(100%-240px)]",
+             className={cn("absolute top-0 z-[99999] w-[calc(100%-240px)]",
                 isResetting && "transition-all ease ease-in-out duration-300",
                 isMobile && "left-0 w-full"
              )}

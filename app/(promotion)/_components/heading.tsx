@@ -7,16 +7,29 @@ import { Spinner } from "@/components/spinners"
 import Link from "next/link"
 import { SignInButton } from "@clerk/clerk-react"
 
+import { Days_One } from "next/font/google"
+
+import { cn  } from "@/lib/utils";
+
+const font = Days_One({
+    subsets: ["latin"],
+    weight:["400"]
+});
+
+
 export const Heading = () => {
   const {isAuthenticated, isLoading} = useConvexAuth()
   return (
-    <div className="max-w-3xl space-y-4">
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold">
-          Your Ideas, Documents, & Plans Unified. Welcome to <span className="underline">Polaris</span>
-        </h1>
+    <div className="max-w-5xl space-y-4">
+        <h1 className={cn("text-3xl sm:text-5xl md:text-6xl font-bold", font.className)}>
+           Your Documents, Ideas, Plans, and Tasks All in One Place <span className="relative inline-block"> 
+             Polaris 
+             <span className="absolute bottom-[-10px] left-0 w-full h-[8px] border-t-[5px] border-solid rounded-[50%] border-transparent bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 "></span>
+           </span>
+         </h1>
 
         <h3 className="text-base sm:text-xl md:text-2xl font-medium">
-          Polaris is connected workspace where better and faster work happens
+          Make your everyday more productive!!
         </h3>
         {isLoading && (
           <div className="w-full flex items-center justify-center">
