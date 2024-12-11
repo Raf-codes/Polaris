@@ -9,10 +9,18 @@ export default defineSchema ({
         parentDocument:v.optional(v.id("documents")),
         content : v.optional(v.string()),
         coverImage:v.optional(v.string()),
+        depth:v.optional(v.number()),
         icon: v.optional(v.string()),
         isPublished: v.boolean()
     })
     .index("by_user",["userId"])
-    .index("by_user_parent",["userId","parentDocument"])
+    .index("by_user_parent",["userId","parentDocument"]),
+
+    users: defineTable({
+        fullName: v.string(),
+        email: v.string(),
+        isBanned: v.boolean(),
+        userId:v.string()
+    })
+    .index("by_email", ["email"])
 })
- 
