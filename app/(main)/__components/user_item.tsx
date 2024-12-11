@@ -51,7 +51,6 @@ export const UserItem = () => {
                         <div className="space-y-1">
                             <p className="text-sm line-clamp-1">
                                 {user?.fullName}&apos;s Polaris
-                            {/* add <UserButton /> here imported from clerk , show the clerk's user profile thing on top top this  */}
                             </p>
 
                         </div>
